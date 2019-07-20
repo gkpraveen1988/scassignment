@@ -11,7 +11,7 @@ node('master'){
 
     stage('Jenkins CLI to add the slave entry') {
         sh '''
-        cat <<EOF | java -jar jenkins-cli.jar -s http://10.40.73.106:8000 -auth admin:"${admintoken}" create-node appserver 
+        cat <<EOF | java -jar jenkins-cli.jar -s http://10.40.73.106:8000 -auth admin:1147655d74720ae967e1be190d4d31990f create-node appserver 
             <slave>
               <name>appserver</name>
               <description></description>
