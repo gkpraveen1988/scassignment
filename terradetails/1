@@ -1,0 +1,64 @@
+provider "aws" {
+  region = "us-west-2"
+}
+
+variable "taginfo" {
+  default = "kubesetup"
+}
+
+variable "amiinfo" {
+  default = "ami-0de53d8956e8dcf80"
+}
+
+variable "ec2_subnet_ids" {
+  default = "subnet-20b61e56"
+}
+
+resource "aws_instance" "kube" {
+  depends_on    = ["aws_ebs_volume.kubevol"]
+  depends_on    = ["aws_security_group.allow_tls"]
+  ami           = "${var.amiinfo}"
+  instance_type = "t2.micro"
+  subnet_id     = "${var.ec2_subnet_ids}"
+
+  tags = {
+    Name = "${var.taginfo}"
+  }
+}
+
+resource "aws_ebs_volume" "kubevol" {
+  type              = "gp2"
+  availability_zone = "us-west-2a"
+  size              = 40
+  tags = {
+    Name = "${var.taginfo}"
+  }
+}
+
+resource "aws_volume_attachment" "ebs_att" {
+  device_name = "/dev/sda1"
+  volume_id   = "${aws_ebs_volume.kubevol.id}"
+  instance_id = "${aws_instance.kube.id}"
+}
+
+resource "aws_security_group" "allow_tls" {
+  name        = "kubesetup"
+  description = "SG for Kubesteup"
+  vpc_id      = "${aws_vpc.main.id}"
+
+  ingress {
+    # TLS (change to whatever ports you need)
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
+    cidr_blocks = "10.0.0.0/8"
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "TCP"
+    cidr_blocks     = ["0.0.0.0/0"]
+    prefix_list_ids = ["pl-12c4e678"]
+  }
+}
