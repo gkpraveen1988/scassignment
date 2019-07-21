@@ -1,11 +1,13 @@
 - hosts: local_instance
   become: true
   tasks:
-    - name: Updating Java 
+    - name: Updating Java
       yum:
         name: java-1.8.0-openjdk
         state: latest
-    - name: Updating Git 
+    - name: Setting Alternatives
+      shell : alternatives --config java <<< '2'
+    - name: Updating Git
       yum:
         name: git
         state: latest
@@ -14,5 +16,4 @@
         url: http://10.40.73.106:8000/jnlpJars/agent.jar
         dest: /tmp/agent.jar
     - name: Adding to Jenking Slave
-      shell: nohup java -jar /tmp/agent.jar -jnlpUrl http://10.40.73.106:8000/computer/Slave1/slave-agent.jnlp -secret 3a37bc983e2576b4b806952e47546b97a8b149c0e32a76f3f3927da91b2748e5 -workDir "/home/jenkins" 2>&1 &
-
+      shell: nohup java -jar /tmp/agent.jar -jnlpUrl http://10.40.73.106:8000/computer/appserver/slave-agent.jnlp -secret c5251f77985f70fe09a5e6155cbe0a58d30adb1f5773d3bfd10ff5a1ba72424d -workDir "/home/jenkins/agent" &
