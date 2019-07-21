@@ -5,24 +5,13 @@ node('master'){
         checkout scm
     }
     
-    stage('Creating Ec2 Instance') {
-        sh """
-        cd ${env.WORKSPACE}/terradetails
-        ls -ltr
-        terraform init
-        terraform plan
-        terraform apply --auto-approve
-        terraform output instance_ip_addr
-        """
-    }
-    
     stage('Jenkins CLI to add the slave entry') {
         sh """
         wget http://10.40.73.106:8000/jnlpJars/jenkins-cli.jar -o /tmp/jenkins-cli.jar
         cd jenkins-cli.jar
         cat <<EOF | java -jar jenkins-cli.jar -s http://10.40.73.106:8000 -auth admin:$admintoken create-node appserver 
             <slave>
-              <name>appserver</name>
+              <name>10.40.73.106</name>
               <description></description>
               <remoteFS>/home/jenkins/agent</remoteFS>
               <numExecutors>1</numExecutors>
