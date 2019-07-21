@@ -12,7 +12,7 @@ node('master'){
             mkdir ${env.WORKSPACE}/ansible_deploy; cd ${env.WORKSPACE}/ansible_deploy
             cp /instance1.pem ${env.WORKSPACE}/ansible_deploy
             echo '[application]' > hosts
-            echo ${ipaddress} ansible_connection=ssh ansible_user=ec2-user" >> hosts
+            echo "${ipaddress} ansible_connection=ssh ansible_user=ec2-user" >> hosts
             echo '[local_instance:vars]' >> hosts
             echo 'ansible_ssh_private_key_file=instance1.pem' >> hosts
             echo "Ansible host file constructed" 
