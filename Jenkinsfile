@@ -1,21 +1,17 @@
 def admintoken = "1147655d74720ae967e1be190d4d31990f"
 
 node('master'){
-    stage('Creating Ec2 Instance') {
-        sh """
-        cd ${env.WORKSPACE}/terradetails
-        terraform init                      // Initiating terraform
-        terraform plan                      // Getting a pre-approval / check the resources to be applied to
-        terraform apply --auto-approve      // Applying the terraform file
-        terraform output instance_ip_addr   // Capturing the state after applying the changes and IP Address
-        """
+    stage('Checking out code') {
+        checkout scm
     }
-
+    
     stage('Jenkins CLI to add the slave entry') {
         sh """
+        wget http://10.40.73.106:8000/jnlpJars/jenkins-cli.jar -o /tmp/jenkins-cli.jar
+        cd /tmp
         cat <<EOF | java -jar jenkins-cli.jar -s http://10.40.73.106:8000 -auth admin:$admintoken create-node appserver 
             <slave>
-              <name>appserver</name>
+              <name>10.40.73.106</name>
               <description></description>
               <remoteFS>/home/jenkins/agent</remoteFS>
               <numExecutors>1</numExecutors>
