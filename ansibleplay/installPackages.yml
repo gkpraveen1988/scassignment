@@ -15,5 +15,9 @@
       get_url:
         url: http://10.40.73.106:8000/jnlpJars/agent.jar
         dest: /tmp/agent.jar
+    - name: Installing pymysql
+      shell: pip install pymysql
+    - name: Installing flask
+      shell: pip install flask
     - name: Adding to Jenking Slave
       shell: nohup java -jar agent.jar -jnlpUrl http://10.40.73.106:8000/computer/appserver/slave-agent.jnlp -secret c5251f77985f70fe09a5e6155cbe0a58d30adb1f5773d3bfd10ff5a1ba72424d -workDir "/home/jenkins/agent" &

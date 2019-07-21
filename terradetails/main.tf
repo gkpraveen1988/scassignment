@@ -49,6 +49,14 @@ resource "aws_security_group" "allow_tls" {
     protocol    = "TCP"
     cidr_blocks = ["10.0.0.0/8"]
   }
+ 
+ ingress {
+    # TLS (change to whatever ports you need)
+    from_port   = 7000
+    to_port     = 7000
+    protocol    = "TCP"
+    cidr_blocks = ["10.0.0.0/8"]
+  }
 
   egress {
     from_port       = 0
