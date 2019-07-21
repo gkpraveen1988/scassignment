@@ -1,6 +1,10 @@
 def admintoken = "1147655d74720ae967e1be190d4d31990f"
 
 node('master'){
+    stage('Checking out code') {
+        checkout scm
+    }
+    
     stage('Creating Ec2 Instance') {
         sh """
         cd ${env.WORKSPACE}/terradetails
