@@ -43,7 +43,7 @@ node('master'){
     stage('Constructing Ansible inventory_file') {
         def ipaddress = sh (returnStdout: true, script: """
 	    cd ${env.WORKSPACE}/terradetails; terraform output instance_ip_addr
-	""")
+	""").trim()
         sh """
             cd ${env.WORKSPACE}/ansibleplay
             cp /instance1.pem ${env.WORKSPACE}/ansibleplay
@@ -56,7 +56,7 @@ node('master'){
             cat ${env.WORKSPACE}/ansibleplay/hosts            
         """
     }
-    
+    /*
     stage('Applying ansible files') {
         sh """
             cd ${env.WORKSPACE}/ansibleplay
@@ -64,4 +64,5 @@ node('master'){
             echo "Ansible yaml successfully applied"
         """
     }
+    */
 }
