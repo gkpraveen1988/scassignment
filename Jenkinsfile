@@ -41,5 +41,16 @@ node('master'){
             echo "Ansible yaml successfully applied"
         """
     }
-    
+}
+
+node('appserver'){    
+    stage("Checkout") {
+        checkout scm
+    }
+    stage("Starting the application") {
+        sh """
+        cd ${env.WORKSPACE}/flaskScripts
+        nohup python mainflask.py >> out.logs 2>&1 & 
+        """
+    }
 }
