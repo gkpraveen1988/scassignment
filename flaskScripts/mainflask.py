@@ -41,4 +41,4 @@ def createuserdata():
     return render_template("showdata.html",result = result)
 
 if __name__ == '__main__':
-   app.run('localhost',7000,debug = True)
+   app.run('0.0.0.0',7000,debug = True)
