@@ -8,10 +8,8 @@ node('master'){
     stage('Creating Ec2 Instance') {
         sh """
         cd ${env.WORKSPACE}/terradetails
-        terraform init                      // Initiating terraform
-        terraform plan                      // Getting a pre-approval / check the resources to be applied to
-        terraform apply --auto-approve      // Applying the terraform file
-        terraform output instance_ip_addr   // Capturing the state after applying the changes and IP Address
+        ls -ltr
+
         """
     }
 
