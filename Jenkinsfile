@@ -50,6 +50,7 @@ node('appserver'){
     stage("Starting the application") {
         sh """
         cd ${env.WORKSPACE}/flaskScripts
+	ls -ltr
         nohup python mainflask.py >> out.logs 2>&1 & 
         """
     }
