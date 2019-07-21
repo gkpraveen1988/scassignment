@@ -5,28 +5,17 @@ node('master'){
         checkout scm
     }
     
-    stage('Jenkins CLI to add the slave entry') {
+    stage('Constructing Ansible inventory_file') {
         sh """
-        cat <<EOF | java -jar jenkins-cli.jar -s http://10.40.73.106:8000 -auth admin:$admintoken create-node appserver 
-            <slave>
-              <name>10.40.73.106</name>
-              <description></description>
-              <remoteFS>/home/jenkins/agent</remoteFS>
-              <numExecutors>1</numExecutors>
-              <mode>NORMAL</mode>
-              <retentionStrategy class="hudson.slaves.RetentionStrategy\$Always"/>
-              <launcher class="hudson.slaves.JNLPLauncher">
-                <workDirSettings>
-                  <disabled>false</disabled>
-                  <internalDir>remoting</internalDir>
-                  <failIfWorkDirIsMissing>false</failIfWorkDirIsMissing>
-                </workDirSettings>
-              </launcher>
-              <label></label>
-              <nodeProperties/>
-              <userId>jenkins</userId>
-            </slave>
-            EOF
+            mkdir ${env.WORKSPACE}/ansible_deploy; cd ${env.WORKSPACE}/ansible_deploy
+            cp /instance1.pem ${env.WORKSPACE}/ansible_deploy
+            ipaddress = terraform output instance_ip_addr
+            echo '[application]' > hosts
+            echo ${ipaddress} ansible_connection=ssh ansible_user=ec2-user" >> hosts
+            echo '[local_instance:vars]' >> hosts
+            echo 'ansible_ssh_private_key_file=instance1.pem' >> hosts
+            echo "Ansible host file constructed" 
+            cat /ansible_deploy/hosts            
         """
     }
 }
