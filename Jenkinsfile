@@ -60,7 +60,7 @@ node('master'){
     stage('Applying ansible files') {
         sh """
             cd ${env.WORKSPACE}/ansibleplay
-            ansible-playbook -i hosts installPackages.yml
+            ansible-playbook -i hosts installPackages.yml --ssh-common-args='-o "StrictHostKeyChecking no"'
             echo "Ansible yaml successfully applied"
         """
     }
