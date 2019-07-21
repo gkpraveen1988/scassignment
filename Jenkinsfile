@@ -16,7 +16,7 @@ node('master'){
             echo '[local_instance:vars]' >> hosts
             echo 'ansible_ssh_private_key_file=instance1.pem' >> hosts
             echo "Ansible host file constructed" 
-            cat /ansible_deploy/hosts            
+            cat ${env.WORKSPACE}/ansible_deploy/hosts            
         """
     }
 }
