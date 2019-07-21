@@ -3,7 +3,7 @@ node('master'){
     stage('Checking out code') {
         checkout scm
     }
-
+    /*	
     stage('Creating Ec2 Instance') {
         sh """
         cd ${env.WORKSPACE}/terradetails
@@ -39,10 +39,11 @@ node('master'){
             EOF
         """
     }
-
+    */
     stage('Constructing Ansible inventory_file') {
-        def ipaddress = sh "terraform output instance_ip_addr"
-        //def ipaddress = '10.40.73.82'
+        def ipaddress = sh (returnStdout: true, script: """
+	    cd ${env.WORKSPACE}/terradetails; terraform output instance_ip_addr
+	""")
         sh """
             cd ${env.WORKSPACE}/ansibleplay
             cp /instance1.pem ${env.WORKSPACE}/ansibleplay
