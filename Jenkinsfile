@@ -52,6 +52,7 @@ node('master'){
             echo '' >> hosts
             echo '[local_instance:vars]' >> hosts
             echo 'ansible_ssh_private_key_file=instance1.pem' >> hosts
+	    ssh -oStrictHostKeyChecking=no -i instance1.pem ec2-user@${ipaddress} uptime
             echo "Ansible host file constructed" 
             cat ${env.WORKSPACE}/ansibleplay/hosts            
         """
