@@ -23,7 +23,7 @@ node('master'){
     
     stage('Applying ansible files') {
         sh """
-            cd ${env.WORKSPACE}/ansibleplan
+            cd ${env.WORKSPACE}/ansibleplay
             ansible-playbook -i hosts installPackages.yml
             echo "Ansible yaml successfully applied"
         """
