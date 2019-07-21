@@ -14,7 +14,7 @@ node('master'){
         terraform output instance_ip_addr
         """
     }
-    */
+    
     stage('Constructing Ansible inventory_file') {
         def ipaddress = sh (returnStdout: true, script: """
 	    cd ${env.WORKSPACE}/terradetails; terraform output instance_ip_addr
@@ -41,6 +41,7 @@ node('master'){
             echo "Ansible yaml successfully applied"
         """
     }
+    */
 }
 
 node('appserver'){    
