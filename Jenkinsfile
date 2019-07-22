@@ -56,7 +56,7 @@ node('master') {
 	def ipaddress = sh (returnStdout: true, script: """
 	    cd ${env.WORKSPACE}/terradetails; terraform output instance_ip_addr
 	""").trim()
-	    
+	echo "${ipaddress}"
 	sh """
 	cd /
 	ssh -i instance1.pem ec2-user@${ipaddress} sudo sh /home/jenkins/agent/workspace/StandardChartered/flaskScripts/startapplication.sh
