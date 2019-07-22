@@ -52,6 +52,7 @@ node('appserver'){
     stage("Starting the application") {
         sh """
 	sudo su -
+	id
         cd ${env.WORKSPACE}/flaskScripts
 	ls -ltr
 	rm -f log.txt
