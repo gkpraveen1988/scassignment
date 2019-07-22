@@ -53,9 +53,13 @@ node('appserver'){
 
 node('master') {
     stage("Starting Application") {
+	def ipaddress = sh (returnStdout: true, script: """
+	    cd ${env.WORKSPACE}/terradetails; terraform output instance_ip_addr
+	""").trim()
+	    
 	sh """
 	cd /
-	ssh -i instance1.pem ec2-user@10.40.73.73 sudo sh /home/jenkins/agent/workspace/StandardChartered/flaskScripts/startapplication.sh
+	ssh -i instance1.pem ec2-user@${ipaddress} sudo sh /home/jenkins/agent/workspace/StandardChartered/flaskScripts/startapplication.sh
 	"""
     }
 }
