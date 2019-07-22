@@ -22,4 +22,6 @@ variable "ec2_subnet_ids" {
   default = "subnet-49ba4463"
 }
 
-
+variable "elb_subnet_ids" {
+  default = ["subnet-23b61e55","subnet-4cba4466"]
+}
