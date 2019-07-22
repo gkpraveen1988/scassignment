@@ -49,14 +49,13 @@ node('appserver'){
     stage("Checkout") {
         checkout scm
     }
-    stage("Starting the application") {
-        sh """
-	sudo su -
-	id
-        cd ${env.WORKSPACE}/flaskScripts
-	ls -ltr
-	rm -f log.txt
-	sh startapplication.sh
+}
+
+node('master') {
+    stage("Starting Application") {
+	sh """
+	cd /
+	ssh -i instance1.pem ec2-user@10.40.73.73 sudo sh /home/jenkins/agent/workspace/StandardChartered/flaskScripts/startapplication.sh
 	"""
     }
 }
