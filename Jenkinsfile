@@ -51,10 +51,11 @@ node('appserver'){
     }
     stage("Starting the application") {
         sh """
+	sudo su -
         cd ${env.WORKSPACE}/flaskScripts
 	ls -ltr
-	echo 'sudo python mainflask.py >> log.txt 2>&1 &' > startapplication.sh
-	sh startapplication.sh
-        """
+	rm -f log.txt
+	nohup python mainflask.py >> log.txt 2>&1 &
+	"""
     }
 }
