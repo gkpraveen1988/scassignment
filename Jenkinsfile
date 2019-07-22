@@ -53,7 +53,8 @@ node('appserver'){
         sh """
         cd ${env.WORKSPACE}/flaskScripts
 	ls -ltr
-	sudo python mainflask.py >> log.txt 2>&1 &
+	echo 'sudo python mainflask.py >> log.txt 2>&1 &' > startapplication.sh
+	sh startapplication.sh
         """
     }
 }
