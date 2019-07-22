@@ -33,7 +33,7 @@ node('master'){
             cat ${env.WORKSPACE}/ansibleplay/hosts            
         """
     }
-      
+    */  
     stage('Applying ansible files') {
         sh """
             cd ${env.WORKSPACE}/ansibleplay
@@ -41,7 +41,6 @@ node('master'){
             echo "Ansible yaml successfully applied"
         """
     }
-    */
 }
 
 
