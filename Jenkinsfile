@@ -3,7 +3,7 @@ node('master'){
     stage('Checking out code') {
         checkout scm
     }
-    /*	
+    	
     stage('Creating Ec2 Instance') {
         sh """
         cd ${env.WORKSPACE}/terradetails
@@ -14,6 +14,17 @@ node('master'){
         terraform output instance_ip_addr
         """
     }
+    /*
+    stage('Creating RDS instance')  {
+	sh """
+	cd ${env.WORKSPACE}/rdssetup
+  	terraform init
+	terraform plan
+	terraform apply --auto-approve
+  	terraform output rds_instance_endpoint
+	"""
+    }
+    */
     
     stage('Constructing Ansible inventory_file') {
         def ipaddress = sh (returnStdout: true, script: """
@@ -22,6 +33,7 @@ node('master'){
         sh """
             cd ${env.WORKSPACE}/ansibleplay
             cp /instance1.pem ${env.WORKSPACE}/ansibleplay
+ 	    rm -f ${env.WORKSPACE}/ansibleplay/hosts
             echo '[local_instance]' > hosts
             echo "${ipaddress} ansible_connection=ssh ansible_user=ec2-user" >> hosts
             echo '' >> hosts
@@ -33,7 +45,7 @@ node('master'){
             cat ${env.WORKSPACE}/ansibleplay/hosts            
         """
     }
-    */  
+      
     stage('Applying ansible files') {
         sh """
             cd ${env.WORKSPACE}/ansibleplay

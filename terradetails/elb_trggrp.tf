@@ -3,6 +3,9 @@ resource "aws_lb_target_group" "appservergrp" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"
+  tags = {
+    Name = "${var.taginfo}"
+  }
 }
 
 resource "aws_lb_listener" "appserverlist" {
