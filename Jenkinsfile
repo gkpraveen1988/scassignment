@@ -55,7 +55,7 @@ node('appserver'){
         cd ${env.WORKSPACE}/flaskScripts
 	ls -ltr
 	rm -f log.txt
-	nohup python mainflask.py >> log.txt 2>&1 &
+	sh startapplication.sh
 	"""
     }
 }
