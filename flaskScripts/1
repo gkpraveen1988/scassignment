@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getuser</title>
+</head>
+<p><b>Here are the details....</b></p>
+   <body>
+     {{ result }}
+
+   </body>
+</html>

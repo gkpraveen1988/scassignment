@@ -2,10 +2,10 @@ import pymysql
 
 # Open database connection
 def connecttodb():
-    keyname = 'password123'
-    hstnm = ''
-    unm = 'admin'
-    dbnm = ''
+    keyname = '##########'
+    hstnm = '##########'
+    unm = 'appadminuser'
+    dbnm = 'appserverrds'
     try:
         constatus = 1
         db = pymysql.connect(hstnm,unm,keyname,dbnm)
@@ -13,3 +13,7 @@ def connecttodb():
     except pymysql.error as constatus:
         print constatus
     return cursor,db,constatus
+
+if __name__ == "__main__":
+    cursor,db,constatus = connecttodb()
+    print cursor,db,constatus

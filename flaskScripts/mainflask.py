@@ -32,11 +32,12 @@ def getuserdata():
 def deleteuserdata():
     custID = request.form
     result = deleteUser(custID)
+    print result
     return render_template("showdata.html",result = result)
 
 @app.route('/createuserdata', methods=['GET','POST'])
 def createuserdata():
-    custdata = request.form
+    custdata = request.form.to_dict(flat=True)
     result = createUpdateUser(custdata)
     return render_template("showdata.html",result = result)
 
