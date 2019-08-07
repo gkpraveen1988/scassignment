@@ -2,8 +2,8 @@ import pymysql
 
 # Open database connection
 def connecttodb():
-    keyname = '##########'
-    hstnm = '##########'
+    keyname = 'Appserver123'
+    hstnm = 'appserverrds.c38g0usozfwk.us-east-1.rds.amazonaws.com'
     unm = 'appadminuser'
     dbnm = 'appserverrds'
     try:
